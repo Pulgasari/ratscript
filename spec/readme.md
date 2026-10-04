@@ -443,6 +443,29 @@ switch {
 }
 ```
 
+## keyword `proxy`
+
+```javascript
+proxy ThingProxy for/of RealThing {
+  // 
+  get password : { return "********"; }
+  get password : "********";
+
+  fn doSth () {...}
+  fn doSth : () => {...}
+  fn doSth : 'function returnt eh nur nen string';
+  
+  // static props and methods
+
+  static get version : { return "1.0.0"; }
+  static get version : "1.0.0";
+
+  static fn doSth () {...}
+  static fn doSth : () => {...}
+  static fn doSth : 'function returnt eh nur nen string';
+}
+```
+
 ## Prototype Accessor
 
 ...
