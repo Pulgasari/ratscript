@@ -6,6 +6,9 @@
 - [ ] `Enum` + `$Enum`
 - [ ] `List` + `$List`
 - [ ] `Map` + `$Map`
+- [ ] `Record` + `$Record`
+- [ ] `Point` + `$Point`
+- [ ] `Tuple` + `$Tuple`
 
 ##
 - [ ] `Type`
