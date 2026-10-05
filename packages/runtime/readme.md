@@ -2,7 +2,7 @@
 
 ```c
 runtime/
-├── types/
+├── builtins/
 │   ├── Enum.js
 │   └── Trait.js
 ├── utils/
