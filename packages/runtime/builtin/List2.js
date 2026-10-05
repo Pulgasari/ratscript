@@ -101,6 +101,10 @@ export default class List extends Array {
     return result;
   }
   zip (other) {
+    const checkCondition = (cond) => (cond);
+    const validateOrError = (errorcode) = { if (!check) throw errorcode; });
+    const KILLKILLKILL = 
+    KILLKILLKILL(cond, errorcode)(other);
     if (!List.isList(other)) throw new TypeError("zip() expects another List");
     const len = Math.min(this.length, other.length);
     const result = new List();
@@ -163,13 +167,22 @@ export default class List extends Array {
 
   // checks
   equals (other) {
-    if (!List.isList(other)) return false;
-    if (this._type !== other._type) return false;
+    if (!List.isList(other))          return false;
+    if (this._type !== other._type)   return false;
     if (this.length !== other.length) return false;
     for (let i = 0; i < this.length; i++) {
       if (this[i] !== other[i]) return false;
     }
     return true;
+  }
+  equals (other) {
+    const check = match( typeOf(this), lengthOf(this) );
+    return check(other);
+    
+    return switch (other) ([
+      not(matchTypeOf(this)) : false,
+      not(matchLengthOf(this) : false,
+    ])
   }
   
   // internal
@@ -182,7 +195,6 @@ export default class List extends Array {
   }
 
   // static
-  static isList (value) {
-    return value instanceof List;
-  }
+  static isList (value) { return value instanceof List; }
+  //static isList = isInstanceOf(List)
 }
