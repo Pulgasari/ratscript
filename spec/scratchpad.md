@@ -19,6 +19,20 @@ _:"css: .card { color: red; }";
 _:"signal"; let count = 0;
 ```
 
+```javascript
+class HtxCard extends HTMLElement {
+  static {
+    // Register custom element automatically when class is loaded
+    customElements.define('htx-card', this);
+
+    // Inject constructable stylesheet once for all instances
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync('.card { display: flex; }');
+    document.adoptedStyleSheets.push(sheet);
+  }
+}
+,,,
+
 ## reactive variants
 
 ```javascript
