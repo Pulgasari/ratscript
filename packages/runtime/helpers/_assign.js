@@ -1,7 +1,17 @@
 // @ratscript/runtime/helpers/_assign.js
 
+import shift from '@pulgasari/shift';
+
 // +=
 export default function _assign (left, right) {
+
+  return shift (left, {
+    'nullish' : right,
+    'number'  : () => left + right,
+    'string'  : () => left + right,
+    'array'   : () => (left.push(right), left),
+    'set'     : () => (left. add(right), left),
+  });
   //
   if (left === undefined || left === null) return right;
 
