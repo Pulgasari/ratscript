@@ -1,3 +1,5 @@
+![Logo](https://raw.githubusercontent.com/Pulgasari/aufbau/refs/heads/main/svg/logos/ratscript.svg)
+
 # RatScript
 
 ## About
