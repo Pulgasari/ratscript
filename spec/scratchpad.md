@@ -5,6 +5,8 @@
 fn person = (name, age) => console.log(`${name} is ${age} years old.);
 ```
 
+
+
 ```javascript
 // 1. Client-Only / Server-Only Markers
 _:"client";
@@ -19,6 +21,8 @@ _:"css: .card { color: red; }";
 _:"signal"; let count = 0;
 ```
 
+## `static {}`
+
 ```javascript
 class HtxCard extends HTMLElement {
   static {
@@ -29,6 +33,36 @@ class HtxCard extends HTMLElement {
     const sheet = new CSSStyleSheet();
     sheet.replaceSync('.card { display: flex; }');
     document.adoptedStyleSheets.push(sheet);
+  }
+}
+```
+
+```js
+import { signal } from '@preact/signals';
+
+class HtxCounter {
+  static #globalCount;
+
+  static {
+    // Initialize shared reactive state once
+    this.#globalCount = signal(0);
+  }
+
+  get count() {
+    return HtxCounter.#globalCount.value;
+  }
+}
+```
+
+```js
+export let getPrivateData;
+
+class SecretCard {
+  #secret = "42";
+
+  static {
+    // Grant external helper function access to private instance data
+    getPrivateData = (instance) => instance.#secret;
   }
 }
 ```
