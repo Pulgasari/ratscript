@@ -195,3 +195,62 @@ a.myProp = "test";
 console.log(b.myProp); // undefined
 console.log(a.myProp); // "test"
 ```
+
+####
+
+```javascript
+import { signal } from '@preact/signals';
+import { $Map } from './reactive-map.js';
+import { $Date } from './reactive-date.js';
+
+// Polyfilled/universal constructor factory
+export function $(initialValue) {
+  // Allow calling with or without 'new'
+  if (!(this instanceof $)) {
+    return new $(initialValue);
+  }
+
+  // 1. Primitives (string, number, boolean) -> Return Preact Signal
+  if (typeof initialValue !== 'object' || initialValue === null) {
+    return signal(initialValue);
+  }
+
+  // 2. Maps -> Return $Map
+  if (initialValue instanceof Map) {
+    return new $Map(initialValue);
+  }
+
+  // 3. Dates -> Return $Date
+  if (initialValue instanceof Date) {
+    return new $Date(initialValue);
+  }
+
+  // 4. Objects & Arrays -> Return Proxy
+  return createReactiveProxy(initialValue);
+}
+```
+
+##### example 1
+
+```javascript
+// Input in .htx (100% valid JS)
+let name = new $('Udo');
+name = 'Peter';
+
+// Preprocessor Output
+const name = signal('Udo');
+name.value = 'Peter'; // Compiler automatically adds .value on assignment/read
+
+```
+
+##### example 2
+
+```javascript
+// Input in .htx
+const user = new $({ name: 'Udo' });
+const items = new $(new Map());
+
+// Preprocessor Output (no .value transformation needed, methods/proxies handle it)
+const user = createReactiveProxy({ name: 'Udo' });
+const items = new $Map();
+```
