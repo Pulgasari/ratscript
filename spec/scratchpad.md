@@ -5,6 +5,20 @@
 fn person = (name, age) => console.log(`${name} is ${age} years old.);
 ```
 
+```javascript
+// 1. Client-Only / Server-Only Markers
+_:"client";
+function onClick() {
+  // Preprocessor moves this to client bundle only
+}
+
+// 2. Scoped CSS or Injection Tag
+_:"css: .card { color: red; }";
+
+// 3. Reactive State Directive
+_:"signal"; let count = 0;
+```
+
 ## reactive variants
 
 ```javascript
