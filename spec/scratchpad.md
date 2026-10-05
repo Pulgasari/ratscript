@@ -31,7 +31,7 @@ class HtxCard extends HTMLElement {
     document.adoptedStyleSheets.push(sheet);
   }
 }
-,,,
+```
 
 ## reactive variants
 
