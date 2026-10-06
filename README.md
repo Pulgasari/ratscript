@@ -65,3 +65,22 @@ V(...) // Vector
 
 a | b | c // Unin
 ```
+
+### das bleibt bzw. teil des gesamtkonzeptes:
+- `${}` + reaktive datentypen
+
+### das is anders:
+- für multiline strings würde evtl ne eingebaute tag funnction reichen, die das sauber leistet
+- 
+
+### das kommt weg:
+- eigenes keyword für signal
+- eigenes keyword für effect
+- eigenes keyword für stylesheet
+- match, switch, sift, mold (thematik bleibt wichtig, aber wird neu konzipiert)
+- bisherige assignment guard konzepte
+
+### das war nur scratch und bleibt es:
+- direktiven mit `_:''`
+- type signatur `::`
+
