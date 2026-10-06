@@ -71,7 +71,9 @@ a | b | c // Unin
 - pipe-operator `|>`
 - operator `is`
 - operator `+=`
+- keyword `proxy`
 - keyword `fn`
+- named arguments
 - try / catch / finally kurzform sugar
 
 ### das bleibt, aber bin unsicher (wird wohl der praxis bedürfen):
@@ -80,6 +82,7 @@ a | b | c // Unin
 ### das is anders:
 - für multiline strings würde evtl ne eingebaute tag funnction reichen, die das sauber leistet
 - statt JSX gehts mir ersma um fie integration meines eigenen HTX syntax (danach aber eventuelle fähigkeit auch JSX u.ä. handy integrieren zu können)
+- `cond` weg aber das thema versuchen neu zu konzipieren
 
 ### das kommt weg:
 - eigenes keyword für signal
