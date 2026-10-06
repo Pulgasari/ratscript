@@ -19,3 +19,49 @@ What **Ratscript** is not: It's not an attempt to "fix JavaScript" or even repla
 - several builtins which i enjoy
 - pattern matching
 - jsx-support
+
+---
+
+## import
+
+```js
+import from '@aufbau/signals' as { effect, signal };
+```
+
+```js
+imports {
+  '@aufbau/signals' : { effect, signal },
+  '@htx/compiler'   : bla,
+}
+```
+
+
+```js
+// ohne keyword -> implizit 'const'
+a = () => ...;
+b = () => ...;
+c = () => ...;
+
+export *;
+export * as default; // selbes muster gibts beim import bereits
+
+export { a, b as doSth, c };
+export default c;
+```
+
+##
+
+```js
+ [a, b, c]; // Array
+#[a, b, c]; // List
+S[a, b, c]; // Set
+$[a, b, c]; // $Array
+
+ {...}
+#{...}
+
+P(...) // Point
+V(...) // Vector
+
+a | b | c // Unin
+```
