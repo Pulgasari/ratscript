@@ -74,6 +74,9 @@ a | b | c // Unin
 - keyword `fn`
 - try / catch / finally kurzform sugar
 
+### das bleibt, aber bin unsicher (wird wohl der praxis bedürfen):
+- literal für Range `..`
+
 ### das is anders:
 - für multiline strings würde evtl ne eingebaute tag funnction reichen, die das sauber leistet
 - statt JSX gehts mir ersma um fie integration meines eigenen HTX syntax (danach aber eventuelle fähigkeit auch JSX u.ä. handy integrieren zu können)
