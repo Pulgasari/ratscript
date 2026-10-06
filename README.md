@@ -68,17 +68,23 @@ a | b | c // Unin
 
 ### das bleibt bzw. teil des gesamtkonzeptes:
 - `${}` + reaktive datentypen
+- pipe-operator `|>`
+- operator `is`
+- operator `+=`
+- keyword `fn`
+- try / catch / finally kurzform sugar
 
 ### das is anders:
 - für multiline strings würde evtl ne eingebaute tag funnction reichen, die das sauber leistet
-- 
+- statt JSX gehts mir ersma um fie integration meines eigenen HTX syntax (danach aber eventuelle fähigkeit auch JSX u.ä. handy integrieren zu können)
 
 ### das kommt weg:
 - eigenes keyword für signal
 - eigenes keyword für effect
 - eigenes keyword für stylesheet
 - match, switch, sift, mold (thematik bleibt wichtig, aber wird neu konzipiert)
-- bisherige assignment guard konzepte
+- bisherige assignment- und line-guards konzepte
+- operator: `inc`
 
 ### das war nur scratch und bleibt es:
 - direktiven mit `_:''`
