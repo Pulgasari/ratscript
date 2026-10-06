@@ -67,6 +67,7 @@ a | b | c // Unin
 ```
 
 ### das bleibt bzw. teil des gesamtkonzeptes:
+- builtin data-types: List, Enum, Union
 - `${}` + reaktive datentypen
 - pipe-operator `|>`
 - operator `is`
@@ -83,6 +84,7 @@ a | b | c // Unin
 - für multiline strings würde evtl ne eingebaute tag funnction reichen, die das sauber leistet
 - statt JSX gehts mir ersma um fie integration meines eigenen HTX syntax (danach aber eventuelle fähigkeit auch JSX u.ä. handy integrieren zu können)
 - `cond` weg aber das thema versuchen neu zu konzipieren
+- alternativer syntax-varianten für `import`/`export` bleibt aber bin bzgl der form noch unsicher
 
 ### das kommt weg:
 - eigenes keyword für signal
