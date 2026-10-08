@@ -25,11 +25,11 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 - `as` im Destructuring
 - Literal-Syntax `#[…]`, `#(…)`, `#{…}`
-- Naked Loop `for (1..10)`
+- Naked Loop `for (1..10)`, auch `for (10)`; Bindung ohne Keyword `for (i of 0..10)` als implizites `let` im Schleifen-Scope (offen: immer neu oder nur wenn Name noch nicht existiert)
 
 ## Form festgelegt
 
-- `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist
+- `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist; Strings/Numbers bleiben wie in JS
 - `|>`: Platzhalter tendenziell `@`
 - `List`: eigene Klasse, `extends Array`
 
