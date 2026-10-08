@@ -15,10 +15,23 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - Keyword `fn`
 - Named Arguments
 - `try` / `catch` / `finally` Kurzform-Sugar
+- Prototype Accessor `::`
 
 ## Bleibt, unsicher (muss sich in der Praxis zeigen)
 
 - Range-Literal `..`
+
+## Unsicher, ob etwas dagegen spricht
+
+- `as` im Destructuring
+- Literal-Syntax `#[…]`, `#(…)`, `#{…}`
+- Naked Loop `for (1..10)`
+
+## Form festgelegt
+
+- `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist
+- `|>`: Platzhalter tendenziell `@`
+- `List`: eigene Klasse, `extends Array`
 
 ## Wird anders
 
@@ -47,23 +60,19 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 ### Syntax
 - `alias … as …` / `alias x = …`
-- `as` im Destructuring
 - `as`-Binding in `if` / `while`
-- Naked Loop `for (1..10)` (hängt an `..`)
-- Prototype Accessor `::`
 - `trait` / `use` (Klassen, Funktionen, Objekte)
 - `or` als Alias für `||`
-- Literal-Syntax `#[…]` (List) und `#(…)` (Tuple)
 - Syntax für `enum` (Keyword?) und `union` (Form?)
 - `proxy`: `for` vs `of`, Member-Kurzformen (`get x : value`, `fn x : value`)
 - `$`-Präfix-Konvention für reaktive Variablen (autom. `.value`)
 
 ### Semantik bestehender Entscheidungen
+- `|>`: implizite Formen (`x |> f`, `x |> f()`, `x |> f(a)`)
+- `#{…}`: wofür
 - `is`: Umfang (Konstruktoren, Klassen, Prädikate, Deep-Shape-Matching, Union-Varianten, Traits)
-- `+=`: welche Typen (Array, Set, Map, Object, List, …)
-- `|>`: Platzhalter `#` oder `_`, implizite Formen
 - `Union`: Mitglieds-Union vs Tagged Union (oder beides)
-- `List`: Wrapper vs `extends Array`, Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
+- `List`: Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
 - `Enum`: API-Umfang
 - reaktive Typen: welche (`$Map`, `$Set`, `$Date`, `$String`, `$Number`, `$Point`, `$Time`, `$localStorage`, …), Bindung an `@preact/signals` oder eigene Signals
 
