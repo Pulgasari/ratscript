@@ -29,8 +29,9 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 ## Form festgelegt
 
-- `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist; Strings/Numbers bleiben wie in JS
-- `|>`: Platzhalter tendenziell `@`
+- `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist; Strings/Numbers bleiben wie in JS; links `undefined`/`null` → Ergebnis ist rechte Seite (`let s; s += 'a'` → `'a'`)
+- `|>`: Platzhalter `_` (nicht `@`, wegen Decorators)
+- `for (10)` = zehnmal, `for (i of 10)` → `i` läuft 1–10
 - `List`: eigene Klasse, `extends Array`
 
 ## Wird anders
