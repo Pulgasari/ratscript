@@ -4,6 +4,13 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 ---
 
+## Grundsatz: Abweichungen von JS
+
+- RS darf die Bedeutung von gültigem JS ändern, wenn das JS-Verhalten praktisch nie gewollt ist
+- jede solche Abweichung ist dokumentiert
+- wo der Compiler sie erkennen kann, warnt er
+- bisherige Fälle: `+=` mit Array/Set/Map/Object/List links, `+=` mit `undefined`/`null` links, Schleifenbindung ohne Keyword
+
 ## Bleibt (Teil des Gesamtkonzepts)
 
 - Builtin-Datentypen: `List`, `Enum`, `Union`
@@ -25,13 +32,14 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 - `as` im Destructuring
 - Literal-Syntax `#[…]`, `#(…)`, `#{…}`
-- Naked Loop `for (1..10)`, auch `for (10)`; Bindung ohne Keyword `for (i of 0..10)` als implizites `let` im Schleifen-Scope (offen: immer neu oder nur wenn Name noch nicht existiert)
+- Naked Loop `for (1..10)`, auch `for (10)`
 
 ## Form festgelegt
 
 - `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist; Strings/Numbers bleiben wie in JS; links `undefined`/`null` → Ergebnis ist rechte Seite (`let s; s += 'a'` → `'a'`)
 - `|>`: Platzhalter `_` (nicht `@`, wegen Decorators)
 - `for (10)` = zehnmal, `for (i of 10)` → `i` läuft 1–10
+- Schleifenbindung ohne Keyword: `for (name of …)` bindet IMMER ein neues `let` im Schleifen-Scope (nur bei nacktem Bezeichner; `for (obj.x of …)`, `for (const x of …)` bleiben JS). Compiler warnt, wenn `name` eine äußere Variable verdeckt
 - `List`: eigene Klasse, `extends Array`
 
 ## Wird anders
