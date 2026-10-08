@@ -30,8 +30,6 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 ## Unsicher, ob etwas dagegen spricht
 
-- `as` im Destructuring
-- Literal-Syntax `#[…]`, `#(…)`, `#{…}`
 - Naked Loop `for (1..10)`, auch `for (10)`
 
 ## Form festgelegt
@@ -41,6 +39,9 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - `for (10)` = zehnmal, `for (i of 10)` → `i` läuft 1–10
 - Schleifenbindung ohne Keyword: `for (name of …)` bindet IMMER ein neues `let` im Schleifen-Scope (nur bei nacktem Bezeichner; `for (obj.x of …)`, `for (const x of …)` bleiben JS). Compiler warnt, wenn `name` eine äußere Variable verdeckt
 - `List`: eigene Klasse, `extends Array`
+- `as` im Destructuring: nur zum Umbenennen, `{ a as b }`, auch mit Default `{ a as b = 1 }`; gilt überall, wo Destructuring vorkommt (Deklaration, Zuweisung, Parameter, Schleifenkopf); Verschachtelung bleibt JS-Form `{ a: { x } }`
+- Literale: `#[…]` → `List` (veränderbar), `#(…)` → `Tuple` (unveränderlich), `#{…}` → `Record` (unveränderlich); `#` heißt "RS-Builtin", nicht "unveränderlich"
+- Vergleich: `===` bleibt Referenzvergleich, struktureller Vergleich über `is` bzw. `.equals()`
 
 ## Wird anders
 
@@ -78,7 +79,7 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 ### Semantik bestehender Entscheidungen
 - `|>`: implizite Formen (`x |> f`, `x |> f()`, `x |> f(a)`)
-- `#{…}`: wofür
+- `Record` ohne/mit `Struct`: `#{…}` ist schemalos; wie wird ein Record an ein Struct gebunden (Syntax), braucht es `Struct` überhaupt
 - `is`: Umfang (Konstruktoren, Klassen, Prädikate, Deep-Shape-Matching, Union-Varianten, Traits)
 - `Union`: Mitglieds-Union vs Tagged Union (oder beides)
 - `List`: Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
