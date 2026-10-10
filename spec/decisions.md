@@ -43,6 +43,8 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - `as` im Destructuring: nur zum Umbenennen, `{ a as b }`, auch mit Default `{ a as b = 1 }`; gilt überall, wo Destructuring vorkommt (Deklaration, Zuweisung, Parameter, Schleifenkopf); Verschachtelung bleibt JS-Form `{ a: { x } }`
 - Literale: `#[…]` → `List`, `#(…)` → `Tuple`, `#{…}` → `Record`; `#` heißt "RS-Builtin", nicht "unveränderlich"
 - Vergleich: `===` bleibt Referenzvergleich, struktureller Vergleich über `is` bzw. `.equals()`
+- `Union`: Liste erlaubter Werte, `new Union(a, b, c)`; kein Literal vorerst (`|` kollidiert mit bitweisem OR)
+- `proxy`: reiner Sugar für JS-`Proxy`; Form `proxy Name for target { … }`; Kurzformen `get x : wert` (Getter liefert Konstante), `fn x : wert` (Methode liefert Konstante)
 - kein eigenes `Struct`-Konzept; Schema-Aufgaben (falls nötig) übernimmt Record selbst
 
 ## Wird anders
@@ -71,7 +73,7 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 ## Noch offen (nicht triagiert)
 
 ### Syntax
-- `proxy`: `for` vs `of`, Semantik (siehe Fragen)
+- `proxy`: Bedeutung von `static`, weitere Traps (`set`, `has`, `delete`, …), `this` in Methoden
 
 ### Zurückgestellt
 - `enum`-Syntax, `trait` / `use`, `or`, `alias`, `as`-Binding in `if` / `while`
@@ -80,7 +82,6 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - `|>`: implizite Formen (`x |> f`, `x |> f()`, `x |> f(a)`)
 - `Record` / `Tuple`: erst mal eigene Datenstruktur, nicht per se unveränderlich; offen: Sealing (feste Keys/Länge), Freezing, Schema-Bindung (Typen, Defaults), nominale Bindung an einen Namen (`rec is User`), Syntax für Schema-Bindung; Klärung über Praxis. Vorschlag v1: `#{…}` sealed, `#(…)` feste Länge (strenger Start lässt sich später lockern, ohne Code zu brechen)
 - `is`: Umfang (Konstruktoren, Klassen, Prädikate, Deep-Shape-Matching, Union-Varianten, Traits)
-- `Union`: Liste erlaubter Werte; Formen `new Union(a, b, c)` und `a | b | c`; offen: Konflikt `|` mit bitweisem OR
 - `List`: Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
 - `Enum`: API-Umfang
 - reaktive Typen: welche (`$Map`, `$Set`, `$Date`, `$String`, `$Number`, `$Point`, `$Time`, `$localStorage`, …), Bindung an `@preact/signals` oder eigene Signals
