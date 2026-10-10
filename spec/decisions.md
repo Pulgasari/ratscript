@@ -44,7 +44,7 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - Literale: `#[…]` → `List`, `#(…)` → `Tuple`, `#{…}` → `Record`; `#` heißt "RS-Builtin", nicht "unveränderlich"
 - Vergleich: `===` bleibt Referenzvergleich, struktureller Vergleich über `is` bzw. `.equals()`
 - `Union`: Liste erlaubter Werte, `new Union(a, b, c)`; kein Literal vorerst (`|` kollidiert mit bitweisem OR)
-- `proxy`: reiner Sugar für JS-`Proxy`; Form `proxy Name for target { … }`; Kurzformen `get x : wert` (Getter liefert Konstante), `fn x : wert` (Methode liefert Konstante)
+- `proxy`: reiner Sugar für JS-`Proxy`; Form `proxy Name for target { … }`; Kurzformen `get x : wert` (Getter liefert Konstante), `fn x : wert` (Methode liefert Konstante); Members: `get`, `set`, `fn`; kein `static` vorerst; Methoden des Originals werden automatisch ans Original gebunden (damit `Map`, `Date`, `Set` usw. funktionieren)
 - kein eigenes `Struct`-Konzept; Schema-Aufgaben (falls nötig) übernimmt Record selbst
 
 ## Wird anders
@@ -73,7 +73,7 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 ## Noch offen (nicht triagiert)
 
 ### Syntax
-- `proxy`: Bedeutung von `static`, weitere Traps (`set`, `has`, `delete`, …), `this` in Methoden
+- (aktuell nichts offen)
 
 ### Zurückgestellt
 - `enum`-Syntax, `trait` / `use`, `or`, `alias`, `as`-Binding in `if` / `while`
