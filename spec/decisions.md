@@ -23,6 +23,7 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - Named Arguments
 - `try` / `catch` / `finally` Kurzform-Sugar
 - Prototype Accessor `::`
+- Reaktivität nur über `$(…)`, kein `$`-Präfix für Variablen
 
 ## Bleibt, unsicher (muss sich in der Praxis zeigen)
 
@@ -70,19 +71,16 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 ## Noch offen (nicht triagiert)
 
 ### Syntax
-- `alias … as …` / `alias x = …`
-- `as`-Binding in `if` / `while`
-- `trait` / `use` (Klassen, Funktionen, Objekte)
-- `or` als Alias für `||`
-- Syntax für `enum` (Keyword?) und `union` (Form?)
-- `proxy`: `for` vs `of`, Member-Kurzformen (`get x : value`, `fn x : value`)
-- `$`-Präfix-Konvention für reaktive Variablen (autom. `.value`)
+- `proxy`: `for` vs `of`, Semantik (siehe Fragen)
+
+### Zurückgestellt
+- `enum`-Syntax, `trait` / `use`, `or`, `alias`, `as`-Binding in `if` / `while`
 
 ### Semantik bestehender Entscheidungen
 - `|>`: implizite Formen (`x |> f`, `x |> f()`, `x |> f(a)`)
 - `Record` / `Tuple`: erst mal eigene Datenstruktur, nicht per se unveränderlich; offen: Sealing (feste Keys/Länge), Freezing, Schema-Bindung (Typen, Defaults), nominale Bindung an einen Namen (`rec is User`), Syntax für Schema-Bindung; Klärung über Praxis. Vorschlag v1: `#{…}` sealed, `#(…)` feste Länge (strenger Start lässt sich später lockern, ohne Code zu brechen)
 - `is`: Umfang (Konstruktoren, Klassen, Prädikate, Deep-Shape-Matching, Union-Varianten, Traits)
-- `Union`: Mitglieds-Union vs Tagged Union (oder beides)
+- `Union`: Liste erlaubter Werte; Formen `new Union(a, b, c)` und `a | b | c`; offen: Konflikt `|` mit bitweisem OR
 - `List`: Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
 - `Enum`: API-Umfang
 - reaktive Typen: welche (`$Map`, `$Set`, `$Date`, `$String`, `$Number`, `$Point`, `$Time`, `$localStorage`, …), Bindung an `@preact/signals` oder eigene Signals
