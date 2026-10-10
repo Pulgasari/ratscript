@@ -1,0 +1,6 @@
+{
+  "name": "ratscript",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*"]
+}

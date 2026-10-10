@@ -1,0 +1,15 @@
+{
+  "name": "@ratscript/runtime",
+  "version": "0.1.0",
+  "description": "runtime builtins and helpers for compiled ratscript",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js",
+    "./reactive": "./src/reactive/index.js"
+  },
+  "files": ["src"],
+  "dependencies": {
+    "@preact/signals-core": "^1.14.0"
+  },
+  "license": "MIT"
+}

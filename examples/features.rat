@@ -1,0 +1,55 @@
+// pipe
+const shout = text => text.toUpperCase();
+const add   = a => b => a + b;
+const title = 'rat' |> shout |> add('>> ') |> String.prototype.padEnd.call(_, 8, '.');
+
+// += universal
+let names = [];
+names += 'udo';
+const tags = new Set;
+tags += 'x';
+let s;
+s += 'a';
+
+// fn + named arguments
+fn person (name, age = 18) {
+  return `${name} is ${age}`;
+}
+const intro = person(age: 60, name: 'Udo');
+
+// try short forms
+try JSON.parse('{');
+try JSON.parse('{') catch (error) console.log('bad json');
+
+// literals
+const list   = #[1, 2, 3];
+const tuple  = #(1, 'a');
+const record = #{ x: 1, y: 2 };
+const words  = new List of String ('a', 'b');
+
+// is
+const checks = [5 is Number, 'a' is String, record is { x: Number }, 4 is 1..10];
+
+// range and loops
+const letters = [...'a'..'e'];
+let sum = 0;
+for (i of 10) sum += i;
+for (3) sum += 1;
+
+// prototype accessor
+fn String::shout () { return this.toUpperCase() + '!'; }
+
+// as in destructuring
+const { x as left, y as top = 0 } = record;
+
+// proxy
+proxy SafeMap for new Map([['a', 1]]) {
+  get secret : '****';
+  fn hello : 'hi';
+}
+
+// reactive
+const count = $(1);
+const double = $(() => count.value * 2);
+
+console.log({ title, names, tags: [...tags], s, intro, list, tuple, record: record.toObject(), words, checks, letters, sum, shout: 'x'.shout(), left, top, secret: SafeMap.secret, hello: SafeMap.hello(), a: SafeMap.get('a'), double: double.value });
