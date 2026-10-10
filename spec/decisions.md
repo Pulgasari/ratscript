@@ -4,6 +4,13 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 ---
 
+## Grundsatz: Abweichungen von JS
+
+- RS darf die Bedeutung von gültigem JS ändern, wenn das JS-Verhalten praktisch nie gewollt ist
+- jede solche Abweichung ist dokumentiert
+- wo der Compiler sie erkennen kann, warnt er
+- bisherige Fälle: `+=` mit Array/Set/Map/Object/List links, `+=` mit `undefined`/`null` links, Schleifenbindung ohne Keyword
+
 ## Bleibt (Teil des Gesamtkonzepts)
 
 - Builtin-Datentypen: `List`, `Enum`, `Union`
@@ -15,10 +22,36 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - Keyword `fn`
 - Named Arguments
 - `try` / `catch` / `finally` Kurzform-Sugar
+- Prototype Accessor `::`
+- Reaktivität nur über `$(…)`, kein `$`-Präfix für Variablen
 
 ## Bleibt, unsicher (muss sich in der Praxis zeigen)
 
 - Range-Literal `..`
+
+## Unsicher, ob etwas dagegen spricht
+
+- Naked Loop `for (1..10)`, auch `for (10)`
+
+## Form festgelegt
+
+- `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist; Strings/Numbers bleiben wie in JS; links `undefined`/`null` → Ergebnis ist rechte Seite (`let s; s += 'a'` → `'a'`)
+- `|>`: Platzhalter `_` (nicht `@`, wegen Decorators)
+- `|>`-Regel: `x |> expr` → `expr(x)`; enthält `expr` ein `_` als Argument, wird stattdessen `_` durch `x` ersetzt. Also `x |> f` → `f(x)`, `x |> f(a)` → `f(a)(x)`, `x |> f()` → `f()(x)`, `x |> f(a, _)` → `f(a, x)`
+- `is`: langfristig möglichst umfassend, schrittweise ausbauen
+- `List`: `toX`-Schema für nicht-mutierende Varianten bleibt; Prüfung auf List via `List.isList`; statt Unterklassen generische Element-Typisierung, Syntax-Idee `new List of String`; Element-Typ = beliebiges `is`-Pattern (Vorschlag)
+- reaktive Typen: überall, wo sinnvoll (`$String`, `$Bool`, `$Number`, `$Map`, `$Set`, `$Date`, …)
+- Runtime: Helper-Importe aus `@ratscript/runtime` statt Inline-Code
+- Parser-Basis: egal (eigen, `@cosmonaut/*` oder bestehender JS-Parser)
+- `for (10)` = zehnmal, `for (i of 10)` → `i` läuft 1–10
+- Schleifenbindung ohne Keyword: `for (name of …)` bindet IMMER ein neues `let` im Schleifen-Scope (nur bei nacktem Bezeichner; `for (obj.x of …)`, `for (const x of …)` bleiben JS). Compiler warnt, wenn `name` eine äußere Variable verdeckt
+- `List`: eigene Klasse, `extends Array`
+- `as` im Destructuring: nur zum Umbenennen, `{ a as b }`, auch mit Default `{ a as b = 1 }`; gilt überall, wo Destructuring vorkommt (Deklaration, Zuweisung, Parameter, Schleifenkopf); Verschachtelung bleibt JS-Form `{ a: { x } }`
+- Literale: `#[…]` → `List`, `#(…)` → `Tuple`, `#{…}` → `Record`; `#` heißt "RS-Builtin", nicht "unveränderlich"
+- Vergleich: `===` bleibt Referenzvergleich, struktureller Vergleich über `is` bzw. `.equals()`
+- `Union`: Liste erlaubter Werte, `new Union(a, b, c)`; kein Literal vorerst (`|` kollidiert mit bitweisem OR)
+- `proxy`: reiner Sugar für JS-`Proxy`; Form `proxy Name for target { … }`; Kurzformen `get x : wert` (Getter liefert Konstante), `fn x : wert` (Methode liefert Konstante); Members: `get`, `set`, `fn`; kein `static` vorerst; Methoden des Originals werden automatisch ans Original gebunden (damit `Map`, `Date`, `Set` usw. funktionieren)
+- kein eigenes `Struct`-Konzept; Schema-Aufgaben (falls nötig) übernimmt Record selbst
 
 ## Wird anders
 
@@ -46,30 +79,19 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 ## Noch offen (nicht triagiert)
 
 ### Syntax
-- `alias … as …` / `alias x = …`
-- `as` im Destructuring
-- `as`-Binding in `if` / `while`
-- Naked Loop `for (1..10)` (hängt an `..`)
-- Prototype Accessor `::`
-- `trait` / `use` (Klassen, Funktionen, Objekte)
-- `or` als Alias für `||`
-- Literal-Syntax `#[…]` (List) und `#(…)` (Tuple)
-- Syntax für `enum` (Keyword?) und `union` (Form?)
-- `proxy`: `for` vs `of`, Member-Kurzformen (`get x : value`, `fn x : value`)
-- `$`-Präfix-Konvention für reaktive Variablen (autom. `.value`)
+- (aktuell nichts offen)
+
+### Zurückgestellt
+- `Enum` komplett (Syntax und API), `trait` / `use`, `or`, `alias`, `as`-Binding in `if` / `while`
 
 ### Semantik bestehender Entscheidungen
+- `Record` / `Tuple`: erst mal eigene Datenstruktur, nicht per se unveränderlich; offen: Sealing (feste Keys/Länge), Freezing, Schema-Bindung (Typen, Defaults), nominale Bindung an einen Namen (`rec is User`), Syntax für Schema-Bindung; Klärung über Praxis. Vorschlag v1: `#{…}` sealed, `#(…)` feste Länge (strenger Start lässt sich später lockern, ohne Code zu brechen)
 - `is`: Umfang (Konstruktoren, Klassen, Prädikate, Deep-Shape-Matching, Union-Varianten, Traits)
-- `+=`: welche Typen (Array, Set, Map, Object, List, …)
-- `|>`: Platzhalter `#` oder `_`, implizite Formen
-- `Union`: Mitglieds-Union vs Tagged Union (oder beides)
-- `List`: Wrapper vs `extends Array`, Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
-- `Enum`: API-Umfang
-- reaktive Typen: welche (`$Map`, `$Set`, `$Date`, `$String`, `$Number`, `$Point`, `$Time`, `$localStorage`, …), Bindung an `@preact/signals` oder eigene Signals
+- reaktive Typen: Bindung an `@preact/signals` oder eigene Signals
 
 ### Builtins
 - `Tuple`
-- `Struct` / `Record`
+- `Record`
 - `Type`
 - `Point`
 
