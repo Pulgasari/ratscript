@@ -37,6 +37,12 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 
 - `+=`: funktioniert überall, wo Anfügen/Zuweisen sinnvoll ist; Strings/Numbers bleiben wie in JS; links `undefined`/`null` → Ergebnis ist rechte Seite (`let s; s += 'a'` → `'a'`)
 - `|>`: Platzhalter `_` (nicht `@`, wegen Decorators)
+- `|>`-Regel: `x |> expr` → `expr(x)`; enthält `expr` ein `_` als Argument, wird stattdessen `_` durch `x` ersetzt. Also `x |> f` → `f(x)`, `x |> f(a)` → `f(a)(x)`, `x |> f()` → `f()(x)`, `x |> f(a, _)` → `f(a, x)`
+- `is`: langfristig möglichst umfassend, schrittweise ausbauen
+- `List`: `toX`-Schema für nicht-mutierende Varianten bleibt; Prüfung auf List via `List.isList`; statt Unterklassen generische Element-Typisierung, Syntax-Idee `new List of String`; Element-Typ = beliebiges `is`-Pattern (Vorschlag)
+- reaktive Typen: überall, wo sinnvoll (`$String`, `$Bool`, `$Number`, `$Map`, `$Set`, `$Date`, …)
+- Runtime: Helper-Importe aus `@ratscript/runtime` statt Inline-Code
+- Parser-Basis: egal (eigen, `@cosmonaut/*` oder bestehender JS-Parser)
 - `for (10)` = zehnmal, `for (i of 10)` → `i` läuft 1–10
 - Schleifenbindung ohne Keyword: `for (name of …)` bindet IMMER ein neues `let` im Schleifen-Scope (nur bei nacktem Bezeichner; `for (obj.x of …)`, `for (const x of …)` bleiben JS). Compiler warnt, wenn `name` eine äußere Variable verdeckt
 - `List`: eigene Klasse, `extends Array`
@@ -76,15 +82,12 @@ Bezug: `spec/inventory.md`. Wird fortlaufend ergänzt, Grundlage für die Neu-Sp
 - (aktuell nichts offen)
 
 ### Zurückgestellt
-- `enum`-Syntax, `trait` / `use`, `or`, `alias`, `as`-Binding in `if` / `while`
+- `Enum` komplett (Syntax und API), `trait` / `use`, `or`, `alias`, `as`-Binding in `if` / `while`
 
 ### Semantik bestehender Entscheidungen
-- `|>`: implizite Formen (`x |> f`, `x |> f()`, `x |> f(a)`)
 - `Record` / `Tuple`: erst mal eigene Datenstruktur, nicht per se unveränderlich; offen: Sealing (feste Keys/Länge), Freezing, Schema-Bindung (Typen, Defaults), nominale Bindung an einen Namen (`rec is User`), Syntax für Schema-Bindung; Klärung über Praxis. Vorschlag v1: `#{…}` sealed, `#(…)` feste Länge (strenger Start lässt sich später lockern, ohne Code zu brechen)
 - `is`: Umfang (Konstruktoren, Klassen, Prädikate, Deep-Shape-Matching, Union-Varianten, Traits)
-- `List`: Typisierung per `typeof`, `toX`-Klon-Schema, Unterklassen (`NumberList`, `StringList`, `ObjectList`, `RecordList`)
-- `Enum`: API-Umfang
-- reaktive Typen: welche (`$Map`, `$Set`, `$Date`, `$String`, `$Number`, `$Point`, `$Time`, `$localStorage`, …), Bindung an `@preact/signals` oder eigene Signals
+- reaktive Typen: Bindung an `@preact/signals` oder eigene Signals
 
 ### Builtins
 - `Tuple`
