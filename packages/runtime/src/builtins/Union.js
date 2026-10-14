@@ -117,7 +117,7 @@ const Union = {
   // utility helper to safely check membership.
   // validates input type before performing lookup.
   has (union, member) {
-    return isSet(union) ? union.has(item) : false;
+    return isSet(union) ? union.has(member) : false;
   },
 
   // merges multiple Union sets into a new frozen Union.
