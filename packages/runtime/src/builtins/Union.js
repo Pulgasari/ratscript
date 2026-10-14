@@ -102,17 +102,22 @@ console.log(Union.has(PrimaryColors, 'red')); // true
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+const isInstanceOf = (sth) => (ClassName) => sth instanceof ClassName;
+const isSet = (sth) => isInstanceOf (Set);
+
+
 const Union = {
   // creates a frozen Set from any iterable.
   // utomatically removes duplicates and enables O(1) lookups.
-  create (members) {
-    return Object.freeze(new Set(members));
+  create (...members) {
+    const membersSet = new Set(members);
+    return Object.freeze(membersSet);
   },
   
   // Utility helper to safely check membership.
   // Validates input type before performing lookup.
   has (unionSet, item) {
-    if (!(unionSet instanceof Set)) {
+    if (!(isSet(unionSet))) {
       return false;
     }
     return unionSet.has(item);
