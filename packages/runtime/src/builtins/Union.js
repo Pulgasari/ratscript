@@ -35,3 +35,52 @@ export default class Union {
     return value !== null && typeof value === 'object' && #members in value;
   }
 }
+
+function Union (members) { return Object.freeze(members); }
+const Union = (members) => Object.freeze(members);
+const Union = function (members) { return Object.freeze(members); }
+
+Union.has = function (item) { this.some(member => item === member); }
+
+const is = (v) => (x) => v === x;
+Union.has = function (item) { this.some(is(item)); }
+
+
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+// Predicate helper function
+const is = (v) => (x) => v === x;
+
+function Union (members) {
+  const collection = [...members];
+
+  // Attach `has` to the collection object
+  Object.defineProperty(collection, 'has', {
+    value: function (item) {
+      // Return boolean result explicitly
+      return this.some(is(item));
+      
+      // Modern alternative:
+      // return this.includes(item);
+    },
+    enumerable: false // Keep `has` out of element iterations
+  });
+
+  return Object.freeze(collection);
+}
+
+// Usage:
+const PrimaryColors = Union(['red', 'green', 'blue']);
+
+console.log(PrimaryColors.has('red'));   // true
+console.log(PrimaryColors.has('yellow'));// false
+
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+function createUnion (members) {
+  return Object.freeze(new Set(members));
+}
+
+const PrimaryColors = createUnion(['red', 'green', 'blue']);
+console.log(PrimaryColors.has('red')); // true
+
