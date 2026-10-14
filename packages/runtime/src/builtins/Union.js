@@ -114,13 +114,10 @@ const Union = {
     return Object.freeze(membersSet);
   },
   
-  // Utility helper to safely check membership.
-  // Validates input type before performing lookup.
-  has (unionSet, item) {
-    if (!(isSet(unionSet))) {
-      return false;
-    }
-    return unionSet.has(item);
+  // utility helper to safely check membership.
+  // validates input type before performing lookup.
+  has (union, member) {
+    return isSet(union) ? union.has(item) : false;
   },
 
   // merges multiple Union sets into a new frozen Union.
@@ -135,8 +132,8 @@ const Union = {
 
 // 1. create immutable unions
 // (duplicates like 'red' are automatically removed)
-const   PrimaryColors = Union.create(['red', 'green', 'blue', 'red']);
-const SecondaryColors = Union.create(['cyan', 'magenta', 'yellow']);
+const   PrimaryColors = Union.create('red', 'green', 'blue', 'red');
+const SecondaryColors = Union.create('cyan', 'magenta', 'yellow');
 
 // 2. lookups work both directly on the instance and via the namespace
 PrimaryColors.has('red');           // -> true  (native Set lookup)
@@ -148,3 +145,7 @@ Union.has(PrimaryColors, 'yellow'); // -> false (namespace helper lookup)
 // 4. Combining sets via namespace helper
 const AllColors = Union.union(PrimaryColors, SecondaryColors);
 AllColors.has('cyan'); // -> true
+
+
+
+
