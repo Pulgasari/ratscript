@@ -103,18 +103,14 @@ console.log(Union.has(PrimaryColors, 'red')); // true
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 const Union = {
-  /**
-   * Creates a frozen Set from any iterable.
-   * Automatically removes duplicates and enables O(1) lookups.
-   */
+  // creates a frozen Set from any iterable.
+  // utomatically removes duplicates and enables O(1) lookups.
   create (members) {
     return Object.freeze(new Set(members));
   },
-
-  /**
-   * Utility helper to safely check membership.
-   * Validates input type before performing lookup.
-   */
+  
+  // Utility helper to safely check membership.
+  // Validates input type before performing lookup.
   has (unionSet, item) {
     if (!(unionSet instanceof Set)) {
       return false;
@@ -122,28 +118,28 @@ const Union = {
     return unionSet.has(item);
   },
 
-  /**
-   * Merges multiple Union sets into a new frozen Union.
-   */
+  // merges multiple Union sets into a new frozen Union.
   union (...sets) {
-    const combined = sets.flatMap(s => Array.from(s));
-    return Object.freeze(new Set(combined));
+    const unionList = sets.flatMap(Array.from);
+    const unionSet  = new Set (unionList);
+    return Object.freeze(unionSet);
   }
 };
 
 // --- Usage ---
 
-// 1. Create immutable unions (duplicates like 'red' are automatically removed)
-const PrimaryColors = Union.create(['red', 'green', 'blue', 'red']);
+// 1. create immutable unions
+// (duplicates like 'red' are automatically removed)
+const   PrimaryColors = Union.create(['red', 'green', 'blue', 'red']);
 const SecondaryColors = Union.create(['cyan', 'magenta', 'yellow']);
 
-// 2. Lookups work both directly on the instance and via the namespace
-console.log(PrimaryColors.has('red'));          // true (native Set lookup)
-console.log(Union.has(PrimaryColors, 'yellow'));// false (namespace helper lookup)
+// 2. lookups work both directly on the instance and via the namespace
+PrimaryColors.has('red');           // -> true  (native Set lookup)
+Union.has(PrimaryColors, 'yellow'); // -> false (namespace helper lookup)
 
 // 3. Immutability protection
 // PrimaryColors.add('black'); // Throws TypeError in strict mode (Set is frozen)
 
 // 4. Combining sets via namespace helper
 const AllColors = Union.union(PrimaryColors, SecondaryColors);
-console.log(AllColors.has('cyan')); // true
+AllColors.has('cyan'); // -> true
